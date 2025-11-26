@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import com.example.kotlintests.stores.HomeStore
 import com.example.kotlintests.stores.MessageType
@@ -26,6 +27,8 @@ fun HomeComponent(store: HomeStore = viewModel(), modifier: Modifier = Modifier)
     val fingerprintPath by store.fingerprintPath.collectAsState()
 
     val percentageMessage = messageList.find { it.second == MessageType.PERCENTAGE }
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -69,6 +72,16 @@ fun HomeComponent(store: HomeStore = viewModel(), modifier: Modifier = Modifier)
         } ?: Spacer(modifier = Modifier.size(0.dp))
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { store.openFingerprintFolder(context) },
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text("Abrir pasta das digitais")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
